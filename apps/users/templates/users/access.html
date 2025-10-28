@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Access{% endblock %}
+{% block content %}
+  <div class="align-items-center justify-content-center d-flex flex-fill flex-column">
+    <h1 class="mb-3">Welcome!</h1>
+    <div class="row gap-3 w-400">
+      <div class="col card p-4">
+        <h3>Register</h3>
+      </div>
+      <div class="col card p-4 text-center" style="width: 50rem;">
+        <h3>Login</h3>
+        <form action="" method="post" id="login-form">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            <i class="bi bi-person-fill input-group-text"></i>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" />
+          </div>
+          <div class="input-group mb-3">
+            <i class="bi bi-lock-fill input-group-text"></i>
+            <input type="password" class="form-control" placeholder="Password" aria-label="Password" />
+          </div>
+          <button class="btn btn-primary w-100" type="submit" name="signin">Sign In</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
