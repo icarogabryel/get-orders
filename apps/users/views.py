@@ -1,13 +1,13 @@
-from django.contrib.auth import authenticate, login
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect
 
 
 def index(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
-        return HttpResponseRedirect('/orders/')
+        return redirect('orders:orders_list')
 
-    return HttpResponseRedirect('/access/')
+    return redirect('users:access')
 
 
 def access(request: HttpRequest) -> HttpResponse:
@@ -21,6 +21,16 @@ def access(request: HttpRequest) -> HttpResponse:
             if user is not None:
                 login(request, user)
 
-                return HttpResponseRedirect('/orders/')
+                return redirect('orders:orders_list')
+
+            return HttpResponseBadRequest('Invalid username or password.')
+        else:
+            return HttpResponseBadRequest('Invalid access method.')
 
     return render(request, 'users/access.html')
+
+
+def signout(request: HttpRequest) -> HttpResponse:
+    logout(request)
+
+    return redirect('users:access')
